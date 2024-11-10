@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Input Komentar</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+        margin: 0;
+      }
+
+      .container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      #result {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Form Input Komentar</h1>
+      <form id="commentForm">
+        <label for="comment">Komentar:</label>
+        <textarea id="comment" rows="4" required></textarea>
+        <button type="button" onclick="processComment()">Proses</button>
+      </form>
+      <div id="result">
+        <h2>Sentimen:</h2>
+        <p id="sentiment">Silakan masukkan komentar dan klik proses.</p>
+      </div>
+    </div>
+
+    <script>
+      function processComment() {
+        const comment = document.getElementById("comment").value;
+        const sentimentElement = document.getElementById("sentiment");
+
+        // Fungsi sederhana untuk menganalisis sentimen
+        function analyzeSentiment(text) {
+          const positiveWords = ["baik", "bagus", "senang", "puas", "hebat"];
+          const negativeWords = ["buruk", "jelek", "marah", "kecewa", "tidak"];
+
+          let score = 0;
+
+          // Menganalisis kata-kata positif
+          positiveWords.forEach((word) => {
+            if (text.includes(word)) {
+              score++;
+            }
+          });
+
+          // Menganalisis kata-kata negatif
+          negativeWords.forEach((word) => {
+            if (text.includes(word)) {
+              score--;
+            }
+          });
+
+          if (score > 0) {
+            return "Positif";
+          } else if (score < 0) {
+            return "Negatif";
+          } else {
+            return "Netral";
+          }
+        }
+
+        const sentiment = analyzeSentiment(comment);
+        sentimentElement.textContent = `Sentimen komentar: ${sentiment}`;
+      }
+    </script>
+  </body>
+</html>
